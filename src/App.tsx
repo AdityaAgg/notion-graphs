@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { select, selectAll } from 'd3-selection'
+import React, { useEffect, useRef } from 'react'
+import { select } from 'd3-selection'
 import { scaleLinear } from 'd3-scale'
 import { axisBottom, axisLeft } from 'd3-axis'
 import { line } from 'd3-shape'
