@@ -1,7 +1,73 @@
+.container {
+  padding: 25px;
+  min-height: 300px;
+  margin: 0px;
+  flex-grow: 1;
+}
+
+#root {
+  display: flex;
+  align-items: stretch;
+}
+
 #journey-timeline {
-  margin: 50px;
-  height: 300px;
-  width: 80%;
+  height: 100%;
+  min-height: 300px;
+  width: 100%;
+}
+
+#refresh-button, #refresh-button:visited {
+  width: 30px;
+  height: 30px;
+  padding: 5px;
+  display: flex;
+  align-items: center; 
+  border-width: 0px;
+  background-color: transparent;
+  border-radius: 2px;
+  margin: 0px;
+  position: absolute;
+  top: 25px;
+  right: 25px;
+}
+
+
+#refresh-button:hover {
+  width: 30px;
+  height: 30px;
+  padding: 5px;
+  display: flex;
+  align-items: center; 
+  border-width: 0px;
+  background-color: rgba(55, 53, 47, 0.08);
+  border-radius: 3px;
+  top: 25px;
+  right: 25px;
+}
+
+#refresh-button:active {
+  width: 30px;
+  height: 30px;
+  padding: 5px;
+  display: flex;
+  align-items: center; 
+  border-width: 0px;
+  background-color:rgba(55, 53, 47, 0.16);
+  border-radius: 3px;
+  top: 25px;
+  right: 25px;
+}
+
+#refresh-button:focus {
+  outline: 0px;
+}
+
+
+
+#refresh-button img {
+  width: 70%;
+  height: 70%;
+  margin: auto;
 }
 
 

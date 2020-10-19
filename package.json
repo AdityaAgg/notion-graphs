@@ -15,6 +15,7 @@
     "@types/react-dom": "^16.9.8",
     "d3-axis": "^2.0.0",
     "d3-scale": "^3.2.3",
+    "d3-selection": "^2.0.0",
     "d3-shape": "^2.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
