@@ -16,7 +16,7 @@ interface DataPoint {
 
 const App: React.FC = () => {
   const svgRef = useRef<null | SVGSVGElement>(null);
-  let { data, error } = useSWR<DataPoint[]>(window.location.search,
+  let { data } = useSWR<DataPoint[]>(window.location.search,
     async (params) => {
       const response = await fetch("https://pnw3gi739c.execute-api.us-east-1.amazonaws.com/production-stage/get_all_events" + params)
       const jsonResponse = await response.json()
@@ -86,7 +86,7 @@ const App: React.FC = () => {
   return (
     <div className="container">
       <svg id="journey-timeline" ref={svgRef} />
-      <button id="refresh-button" onClick={() => mutate('url=https://www.notion.so/c9900066ef9543d986543f7db6594ae3?v=e1498ba37c6043dc9cda20aed703a3a7')}> <img src={refreshIcon} /></button>
+      <button id="refresh-button" onClick={() => mutate('url=https://www.notion.so/c9900066ef9543d986543f7db6594ae3?v=e1498ba37c6043dc9cda20aed703a3a7')}> <img alt="refresh graph" src={refreshIcon} /></button>
     </div>
   );
 }
