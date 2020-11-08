@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "1e347aa442e30b8194077260619add0f",
+    "revision": "2acb8ddc99dc2098c3b6e807afc5acd9",
     "url": "/notion-graphs/index.html"
   },
   {
-    "revision": "8987e374623dd71d4364",
+    "revision": "1f5d3a7fb420cadbf48a",
     "url": "/notion-graphs/static/css/main.2759361c.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/notion-graphs/static/js/2.ce736740.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "8987e374623dd71d4364",
-    "url": "/notion-graphs/static/js/main.1f027429.chunk.js"
+    "revision": "1f5d3a7fb420cadbf48a",
+    "url": "/notion-graphs/static/js/main.76c66cf5.chunk.js"
   },
   {
     "revision": "d548d048667ce4345698",
