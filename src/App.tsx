@@ -35,13 +35,13 @@ const App: React.FC = () => {
       return;
     }
 
-    data = data.filter(dataPoint => dataPoint.x != null
+    let dataFiltered = data.filter(dataPoint => dataPoint.x != null
       && dataPoint.y != null
       && dataPoint.size != null);
 
 
     //determine scales
-    let findCalculatedMinAndMax = (data: DataPoint[], property: string): number[] => {
+    let findCalculatedMinAndMax = (dataFiltered: DataPoint[], property: string): number[] => {
       let postProcessMinMax = (min: number, max: number) => {
         if (max === min) {
           if (max === 0)
@@ -52,8 +52,8 @@ const App: React.FC = () => {
         return [min, max]
       }
       return postProcessMinMax(
-        Math.min(...data.map((dataPoint: DataPoint) => dataPoint[property] as number)),
-        Math.max(...data.map((dataPoint: DataPoint) => dataPoint[property] as number))
+        Math.min(...dataFiltered.map((dataPoint: DataPoint) => dataPoint[property] as number)),
+        Math.max(...dataFiltered.map((dataPoint: DataPoint) => dataPoint[property] as number))
       );
     };
     const urlParams = new URLSearchParams(searchLocation);
@@ -61,11 +61,11 @@ const App: React.FC = () => {
       return parseInt(urlParams.get(property) as string);
     };
 
-    let findMinAndMax = (property: string, data: DataPoint[]): number[] => {
+    let findMinAndMax = (property: string, dataFiltered: DataPoint[]): number[] => {
       let urlParamMin = processManualSetMinAndMax(`${property}Max`);
       let urlParamMax = processManualSetMinAndMax(`${property}Min`);
       if (!urlParamMin || !urlParamMax) {
-        let [min_calculated, max_calculated] = findCalculatedMinAndMax(data, property);
+        let [min_calculated, max_calculated] = findCalculatedMinAndMax(dataFiltered, property);
 
         return [(urlParamMin) ? urlParamMin : min_calculated,
         (urlParamMax) ? urlParamMax : max_calculated];
@@ -73,9 +73,9 @@ const App: React.FC = () => {
       return [urlParamMin, urlParamMax];
     };
 
-    let [xMin, xMax] = findMinAndMax("x", data);
-    let [yMin, yMax] = findMinAndMax("y", data);
-    let [sizeMin, sizeMax] = findMinAndMax("size", data);
+    let [xMin, xMax] = findMinAndMax("x", dataFiltered);
+    let [yMin, yMax] = findMinAndMax("y", dataFiltered);
+    let [sizeMin, sizeMax] = findMinAndMax("size", dataFiltered);
 
     let svg = select(svgRef.current);
     let width = svgRef.current.clientWidth - 50;
@@ -110,7 +110,7 @@ const App: React.FC = () => {
 
     svg.select(".line").remove();
     svg.append("path")
-      .datum(data) //  Binds data to the line
+      .datum(dataFiltered) //  Binds data to the line
       .attr("class", "line")
       .attr("d", linePath) // Calls the line generator
       .attr("fill", "none")
@@ -122,7 +122,7 @@ const App: React.FC = () => {
     //create data points
     svg.selectAll(".dot").remove();
     svg.selectAll(".dot")
-      .data(data)
+      .data(dataFiltered)
       .enter().append("circle")
       .attr("class", "dot") // Assign a class for styling
       .attr("cx", function (d) { return xScale(d.x) as number; })
@@ -133,7 +133,7 @@ const App: React.FC = () => {
       })
       .on("mouseout", function () { });
 
-  }, [data]);
+  }, [data, searchLocation]);
 
   return (
     <div className="container">
