@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "275683a05372153db04b144e255be058",
+    "revision": "878beaffa53472178f826183d269ad0f",
     "url": "/notion-graphs/index.html"
   },
   {
-    "revision": "8fde09edeb4cf8233ce0",
-    "url": "/notion-graphs/static/css/main.364b93f6.chunk.css"
+    "revision": "47999cd0aaa1b5990dce",
+    "url": "/notion-graphs/static/css/main.ae2dbc8b.chunk.css"
   },
   {
-    "revision": "059c720bc2b6c65b64ef",
-    "url": "/notion-graphs/static/js/2.e46733b7.chunk.js"
+    "revision": "14a995b1f9f95bf53a9d",
+    "url": "/notion-graphs/static/js/2.ce736740.chunk.js"
   },
   {
     "revision": "e88a3e95b5364d46e95b35ae8c0dc27d",
-    "url": "/notion-graphs/static/js/2.e46733b7.chunk.js.LICENSE.txt"
+    "url": "/notion-graphs/static/js/2.ce736740.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "8fde09edeb4cf8233ce0",
-    "url": "/notion-graphs/static/js/main.d47f120f.chunk.js"
+    "revision": "47999cd0aaa1b5990dce",
+    "url": "/notion-graphs/static/js/main.628e2f13.chunk.js"
   },
   {
     "revision": "d548d048667ce4345698",
