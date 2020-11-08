@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/notion-graphs/static/css/main.2759361c.chunk.css",
-    "main.js": "/notion-graphs/static/js/main.76c66cf5.chunk.js",
-    "main.js.map": "/notion-graphs/static/js/main.76c66cf5.chunk.js.map",
+    "main.css": "/notion-graphs/static/css/main.ae2dbc8b.chunk.css",
+    "main.js": "/notion-graphs/static/js/main.fe1052eb.chunk.js",
+    "main.js.map": "/notion-graphs/static/js/main.fe1052eb.chunk.js.map",
     "runtime-main.js": "/notion-graphs/static/js/runtime-main.6119787e.js",
     "runtime-main.js.map": "/notion-graphs/static/js/runtime-main.6119787e.js.map",
     "static/js/2.ce736740.chunk.js": "/notion-graphs/static/js/2.ce736740.chunk.js",
     "static/js/2.ce736740.chunk.js.map": "/notion-graphs/static/js/2.ce736740.chunk.js.map",
     "index.html": "/notion-graphs/index.html",
-    "precache-manifest.a4a2fef0ac11b820ed4aae52e27129a9.js": "/notion-graphs/precache-manifest.a4a2fef0ac11b820ed4aae52e27129a9.js",
+    "precache-manifest.c43f1d4a7c714f27347ca362e59ab7a1.js": "/notion-graphs/precache-manifest.c43f1d4a7c714f27347ca362e59ab7a1.js",
     "service-worker.js": "/notion-graphs/service-worker.js",
-    "static/css/main.2759361c.chunk.css.map": "/notion-graphs/static/css/main.2759361c.chunk.css.map",
+    "static/css/main.ae2dbc8b.chunk.css.map": "/notion-graphs/static/css/main.ae2dbc8b.chunk.css.map",
     "static/js/2.ce736740.chunk.js.LICENSE.txt": "/notion-graphs/static/js/2.ce736740.chunk.js.LICENSE.txt",
     "static/media/loop2.svg": "/notion-graphs/static/media/loop2.9dfc4175.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.6119787e.js",
     "static/js/2.ce736740.chunk.js",
-    "static/css/main.2759361c.chunk.css",
-    "static/js/main.76c66cf5.chunk.js"
+    "static/css/main.ae2dbc8b.chunk.css",
+    "static/js/main.fe1052eb.chunk.js"
   ]
 }
