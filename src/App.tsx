@@ -14,6 +14,7 @@ interface DataPoint {
   y: number;
   size: number;
   title: string;
+  [x: string]: string | number;
 }
 
 const App: React.FC = () => {
@@ -21,25 +22,27 @@ const App: React.FC = () => {
   const searchLocation = window.location.search;
   let { data } = useSWR<DataPoint[]>(searchLocation,
     async (params) => {
-      const response = await fetch("https://l175wxlpxi.execute-api.us-east-1.amazonaws.com/production/line_graph" + params)
-      const jsonResponse = await response.json()
-      return jsonResponse["data_points"]
+      const RESPONSE = await fetch("https://l175wxlpxi.execute-api.us-east-1.amazonaws.com/production/line_graph" + params);
+      const JSON_RESPONSE = await RESPONSE.json()
+      return JSON_RESPONSE["data_points"]
     }, { refreshInterval: 30000 }
   );
 
 
+
   useEffect(() => {
-    if (svgRef == null || svgRef.current == null) {
+    if (svgRef == null || svgRef.current == null || !data) {
       return;
     }
 
+    data = data.filter(dataPoint => dataPoint.x != null
+      && dataPoint.y != null
+      && dataPoint.size != null);
 
-    if (!data) {
-      return;
-    }
-    data = data.filter(data_point => data_point.x != null && data_point.y != null && data_point.size != null);
-    let findMinAndMax = (data: any, property: string) => {
-      let postProcessMinMax = (min: any, max: any) => {
+
+    //determine scales
+    let findCalculatedMinAndMax = (data: DataPoint[], property: string): number[] => {
+      let postProcessMinMax = (min: number, max: number) => {
         if (max === min) {
           if (max === 0)
             max += 1;
@@ -48,59 +51,83 @@ const App: React.FC = () => {
         }
         return [min, max]
       }
-      return postProcessMinMax(Math.min(...data.map((dataPoint: any) => dataPoint[property])),
-        Math.max(...data.map((dataPoint: any) => dataPoint[property])));
+      return postProcessMinMax(
+        Math.min(...data.map((dataPoint: DataPoint) => dataPoint[property] as number)),
+        Math.max(...data.map((dataPoint: DataPoint) => dataPoint[property] as number))
+      );
+    };
+    const urlParams = new URLSearchParams(searchLocation);
+    let processManualSetMinAndMax = (property: string): number => {
+      return parseInt(urlParams.get(property) as string);
     };
 
-    let [x_min, x_max] = findMinAndMax(data, "x");
-    let [y_min, y_max] = findMinAndMax(data, "y");
+    let findMinAndMax = (property: string, data: DataPoint[]): number[] => {
+      let urlParamMin = processManualSetMinAndMax(`${property}Max`);
+      let urlParamMax = processManualSetMinAndMax(`${property}Min`);
+      if (!urlParamMin || !urlParamMax) {
+        let [min_calculated, max_calculated] = findCalculatedMinAndMax(data, property);
+
+        return [(urlParamMin) ? urlParamMin : min_calculated,
+        (urlParamMax) ? urlParamMax : max_calculated];
+      }
+      return [urlParamMin, urlParamMax];
+    };
+
+    let [xMin, xMax] = findMinAndMax("x", data);
+    let [yMin, yMax] = findMinAndMax("y", data);
+    let [sizeMin, sizeMax] = findMinAndMax("size", data);
 
     let svg = select(svgRef.current);
     let width = svgRef.current.clientWidth - 50;
     let height = svgRef.current.clientHeight - 50;
     let xScale = scaleLinear()
-      .domain([x_min, x_max + Math.abs(x_max - x_min) * 0.1])
+      .domain([xMin, xMax + Math.abs(xMax - xMin) * 0.1])
       .range([25, width]);
 
     let yScale = scaleLinear()
-      .domain([y_min - 0.1 * Math.abs(y_max - y_min), y_max])
-      .range([height, 50]);
+      .domain([yMin - 0.1 * Math.abs(yMax - yMin), yMax])
+      .range([height, 65]);
 
-    let linePath = line<DataPoint>()
-      .x(function (d) { return xScale(d.x) as number; }) // set the x values for the line generator
-      .y(function (d) { return yScale(d.y) as number; }); // set the y values for the line generator
+    let sizeScale = scaleLinear()
+      .domain([sizeMin, sizeMax + Math.abs(sizeMax - sizeMin) * 0.1])
+      .range([3, 7]);
 
-
+    //create axes
     svg.append("g")
       .attr("class", "x axis")
-      .attr("transform", "translate(0," + (height - 25) + ")")
-      .call(axisBottom(xScale)); // Create an axis component with d3.axisBottom
+      .attr("transform", `translate(0,${height})`)
+      .call(axisBottom(xScale));
 
-    // 4. Call the y axis in a group tag
     svg.append("g")
       .attr("class", "y axis")
-      .attr("transform", "translate(25,-25)")
+      .attr("transform", "translate(25,0)")
       .call(axisLeft(yScale));
+
+    //create line
+    let linePath = line<DataPoint>()
+      .x(function (d) { return xScale(d.x) as number; })
+      .y(function (d) { return yScale(d.y) as number; });
 
     svg.select(".line").remove();
     svg.append("path")
-      .datum(data) // 10. Binds data to the line
-      .attr("class", "line") // Assign a class for styling
-      .attr("d", linePath) // 11. Calls the line generator
+      .datum(data) //  Binds data to the line
+      .attr("class", "line")
+      .attr("d", linePath) // Calls the line generator
       .attr("fill", "none")
       .attr("pointer-events", "visibleStroke")
       .style("stroke", "black")
       .attr("stroke-width", "1px");
 
+
+    //create data points
     svg.selectAll(".dot").remove();
-    // 12. Appends a circle for each datapoint
     svg.selectAll(".dot")
       .data(data)
-      .enter().append("circle") // Uses the enter().append() method
+      .enter().append("circle")
       .attr("class", "dot") // Assign a class for styling
       .attr("cx", function (d) { return xScale(d.x) as number; })
       .attr("cy", function (d) { return yScale(d.y) as number; })
-      .attr("r", function (d) { return d.size * 5 })
+      .attr("r", function (d) { return sizeScale(d.size) as number })
       .on("mouseover", function (a) {
         console.log(a);
       })

@@ -1,6 +1,5 @@
 .container {
-  padding: 25px;
-  min-height: 300px;
+  padding: 10px;
   margin: 0px;
   flex-grow: 1;
 }
