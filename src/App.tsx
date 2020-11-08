@@ -22,7 +22,15 @@ const App: React.FC = () => {
   const searchLocation = window.location.search;
   let { data } = useSWR<DataPoint[]>(searchLocation,
     async (params) => {
-      const RESPONSE = await fetch("https://l175wxlpxi.execute-api.us-east-1.amazonaws.com/production/line_graph" + params);
+      const RESPONSE = await fetch("https://l175wxlpxi.execute-api.us-east-1.amazonaws.com/production/line_graph" + params, {
+        method: "GET",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Cache': 'no-cache'
+        },
+        credentials: 'include'
+      });
       const JSON_RESPONSE = await RESPONSE.json()
       return JSON_RESPONSE["data_points"]
     }, { refreshInterval: 30000 }
