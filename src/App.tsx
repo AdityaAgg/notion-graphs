@@ -19,7 +19,7 @@ interface DataPoint {
 
 interface CompleteGraphData {
   data_points: DataPoint[];
-  series: Map<string, number[]>;
+  series: Record<string, number[]>;
 }
 
 const App: React.FC = () => {
@@ -47,14 +47,14 @@ const App: React.FC = () => {
       return;
     }
     let dataPoints = data.data_points;
-    let series = data.series;
+    let series = new Map(Object.entries(data.series));
+
     let dataFiltered = dataPoints.filter(dataPoint => dataPoint.x != null
       && dataPoint.y != null
       && dataPoint.size != null).reduce((dataMap: Map<number, DataPoint>, dataPoint: DataPoint): Map<number, DataPoint> => {
         dataMap.set(dataPoint.id, dataPoint);
         return dataMap;
       }, new Map<number, DataPoint>());
-
     //determine scales
     let findCalculatedMinAndMax = (dataFilteredArray: DataPoint[], property: string): number[] => {
       let postProcessMinMax = (min: number, max: number) => {
@@ -126,6 +126,7 @@ const App: React.FC = () => {
       series.set("All Data", Array.from(dataFiltered.keys()));
     }
     svg.select(".line").remove();
+    console.log(series);
     (Array.from(series.values())).forEach((seriesArray) => {
       svg.append("path")
         .datum(seriesArray) //  Binds data to the line
@@ -137,25 +138,35 @@ const App: React.FC = () => {
         .attr("stroke-width", "1px");
     });
 
-
     //create data points
     svg.selectAll(".dot").remove();
     svg.selectAll(".dot")
-      .data(Object.values(dataFiltered) as DataPoint[])
+      .data(Array.from(dataFiltered.values()))
       .enter().append("circle")
       .attr("class", "dot") // Assign a class for styling
       .attr("cx", function (d) { return xScale(d.x) as number; })
       .attr("cy", function (d) { return yScale(d.y) as number; })
       .attr("r", function (d) { return sizeScale(d.size) as number })
-      .on("mouseover", function (a) {
-        console.log(a);
+      .on("mouseover", (event: any, dataPoint: DataPoint) => {
+        let graphTooltip = document.getElementById("graph-tooltip") as HTMLElement;
+        graphTooltip.style.setProperty("transform", `translate(${xScale(dataPoint.x)}px, ${yScale(dataPoint.x)}px)`);
+        graphTooltip.style.setProperty("visibility", "visible");
+        graphTooltip.textContent = dataPoint.title;
       })
-      .on("mouseout", function () { });
+      .on("mouseout", (event: any, dataPoint: DataPoint) => {
+        let graphTooltip = document.getElementById("graph-tooltip") as HTMLElement;
+        graphTooltip.style.setProperty("visibility", "hidden");
+      });
 
   }, [data, searchLocation]);
 
+  let graphTooltip = document.getElementById("graph-tooltip") as HTMLElement;
+  graphTooltip.addEventListener("mouseover", (event) => {
+    graphTooltip.style.setProperty("visibility", "visible");
+  });
   return (
     <div className="container">
+      <div id="graph-tooltip" />
       <svg id="journey-timeline" ref={svgRef} />
       <button id="refresh-button" onClick={() => mutate(searchLocation)}> <img alt="refresh graph" src={refreshIcon} /></button>
     </div>

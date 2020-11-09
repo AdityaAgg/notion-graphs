@@ -69,4 +69,58 @@
   margin: auto;
 }
 
+.dot:before {
+	content: "";
+	position: absolute;
+	width: 0;
+	height: 0;
+	left: 23px;
+	top: -42px;
+  border: 10px solid transparent;
+  border-bottom: 32px solid rgb(193,193,193); /* IE8 Fallback */
+  border-bottom: 32px solid rgba(193,193,193,0.5);
+  z-index: 2;
+}
+
+
+
+#graph-tooltip {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  margin-left: -60px;
+  margin-top: 10px;
+}
+
+#graph-tooltip:hover {
+  visibility: visible;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  margin-left: -60px;
+  margin-top: 10px;
+}
+
+#graph-tooltip::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent black transparent;
+}
+
 
