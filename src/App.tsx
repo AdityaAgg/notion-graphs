@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { select } from 'd3-selection'
 import { scaleLinear } from 'd3-scale'
 import { axisBottom, axisLeft } from 'd3-axis'
@@ -7,6 +7,7 @@ import './App.css'
 import useSWR from 'swr'
 import refreshIcon from './loop2.svg';
 import { mutate } from "swr";
+import CSS from 'csstype';
 
 interface DataPoint {
   id: number;
@@ -41,6 +42,16 @@ const App: React.FC = () => {
       return JSON_RESPONSE
     }, { refreshInterval: 30000 }
   );
+  const [tooltipActive, setTooltipActive] = useState(() => {
+    return {
+      visibility: 'hidden',
+      transform: "translate(0,0)"
+    } as CSS.Properties;
+  });
+
+  const [tooltipContent, setTooltipContent] = useState(() => {
+    return { title: "" }
+  });
 
   useEffect(() => {
     if (svgRef == null || svgRef.current == null || !data) {
@@ -122,11 +133,10 @@ const App: React.FC = () => {
     let linePath = line<number>()
       .x(function (d) { return xScale((dataFiltered.get(d) as DataPoint).x) as number; })
       .y(function (d) { return yScale((dataFiltered.get(d) as DataPoint).y) as number; });
-    if (series.size == 0) {
+    if (series.size === 0) {
       series.set("All Data", Array.from(dataFiltered.keys()));
     }
-    svg.select(".line").remove();
-    console.log(series);
+
     (Array.from(series.values())).forEach((seriesArray) => {
       svg.append("path")
         .datum(seriesArray) //  Binds data to the line
@@ -139,7 +149,6 @@ const App: React.FC = () => {
     });
 
     //create data points
-    svg.selectAll(".dot").remove();
     svg.selectAll(".dot")
       .data(Array.from(dataFiltered.values()))
       .enter().append("circle")
@@ -148,25 +157,46 @@ const App: React.FC = () => {
       .attr("cy", function (d) { return yScale(d.y) as number; })
       .attr("r", function (d) { return sizeScale(d.size) as number })
       .on("mouseover", (event: any, dataPoint: DataPoint) => {
-        let graphTooltip = document.getElementById("graph-tooltip") as HTMLElement;
-        graphTooltip.style.setProperty("transform", `translate(${xScale(dataPoint.x)}px, ${yScale(dataPoint.x)}px)`);
-        graphTooltip.style.setProperty("visibility", "visible");
-        graphTooltip.textContent = dataPoint.title;
+        setTooltipActive({
+          transform: `translate(${xScale(dataPoint.x)}px, ${yScale(dataPoint.x)}px)`,
+          visibility: "visible"
+        });
+        setTooltipContent({ title: dataPoint.title });
       })
       .on("mouseout", (event: any, dataPoint: DataPoint) => {
-        let graphTooltip = document.getElementById("graph-tooltip") as HTMLElement;
-        graphTooltip.style.setProperty("visibility", "hidden");
+        setTooltipActive((tooltipActive) => {
+          return {
+            ...tooltipActive,
+            visibility: "hidden"
+          }
+        });
       });
-
+    return () => {
+      svg.selectAll(".dot").remove();
+      svg.select(".line").remove();
+    }
   }, [data, searchLocation]);
 
-  let graphTooltip = document.getElementById("graph-tooltip") as HTMLElement;
-  graphTooltip.addEventListener("mouseover", (event) => {
-    graphTooltip.style.setProperty("visibility", "visible");
-  });
+  let tooltipMouseoverEventListener = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    setTooltipActive({
+      ...tooltipActive,
+      visibility: "visible"
+    });
+  };
+
+  let tooltipMouseoutEventListener = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    setTooltipActive({
+      ...tooltipActive,
+      visibility: "hidden"
+    });
+  };
+
+
+
   return (
     <div className="container">
-      <div id="graph-tooltip" />
+      <div id="graph-tooltip" style={tooltipActive} onMouseOut={tooltipMouseoutEventListener}
+        onMouseOver={tooltipMouseoverEventListener}>{tooltipContent.title}</div>
       <svg id="journey-timeline" ref={svgRef} />
       <button id="refresh-button" onClick={() => mutate(searchLocation)}> <img alt="refresh graph" src={refreshIcon} /></button>
     </div>
