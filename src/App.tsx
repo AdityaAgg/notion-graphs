@@ -30,7 +30,7 @@ const App: React.FC = () => {
 
   let { data } = useSWR<CompleteGraphData>(searchLocation,
     async (params) => {
-      const RESPONSE = await fetch("http://localhost:5000/line_graph" + params, {
+      const RESPONSE = await fetch("https://l175wxlpxi.execute-api.us-east-1.amazonaws.com/production/line_graph" + params, {
         method: "GET",
         headers: {
           'Accept': 'application/json',
