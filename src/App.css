@@ -69,21 +69,6 @@
   margin: auto;
 }
 
-.dot:before {
-	content: "";
-	position: absolute;
-	width: 0;
-	height: 0;
-	left: 23px;
-	top: -42px;
-  border: 10px solid transparent;
-  border-bottom: 32px solid rgb(193,193,193); /* IE8 Fallback */
-  border-bottom: 32px solid rgba(193,193,193,0.5);
-  z-index: 2;
-}
-
-
-
 #graph-tooltip {
   visibility: hidden;
   width: 120px;
@@ -93,7 +78,7 @@
   border-radius: 6px;
   padding: 5px 0;
   position: absolute;
-  z-index: 1;
+  z-index: 100;
   margin-left: -60px;
   margin-top: 10px;
 }
@@ -107,7 +92,7 @@
   border-radius: 6px;
   padding: 5px 0;
   position: absolute;
-  z-index: 1;
+  z-index: 100;
   margin-left: -60px;
   margin-top: 10px;
 }
@@ -122,5 +107,11 @@
   border-style: solid;
   border-color: transparent transparent black transparent;
 }
+
+.line.active {
+  stroke-width: 3; 
+}
+
+/* TODO: convert to sass and enable .line.active on .line hover */
 
 

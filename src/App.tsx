@@ -10,7 +10,7 @@ import { mutate } from "swr";
 import CSS from 'csstype';
 
 interface DataPoint {
-  id: number;
+  index: number;
   x: number;
   y: number;
   size: number;
@@ -51,7 +51,7 @@ const App: React.FC = () => {
   });
 
   const [tooltipContent, setTooltipContent] = useState(() => {
-    return { title: "" }
+    return { title: "", activeElement: null as unknown as undefined | HTMLElement }
   });
 
   useEffect(() => {
@@ -61,12 +61,6 @@ const App: React.FC = () => {
     let dataPoints = data.data_points;
     let series = new Map(Object.entries(data.series));
 
-    let dataFiltered = dataPoints.filter(dataPoint => dataPoint.x != null
-      && dataPoint.y != null
-      && dataPoint.size != null).reduce((dataMap: Map<number, DataPoint>, dataPoint: DataPoint): Map<number, DataPoint> => {
-        dataMap.set(dataPoint.id, dataPoint);
-        return dataMap;
-      }, new Map<number, DataPoint>());
     //determine scales
     let findCalculatedMinAndMax = (dataFilteredArray: DataPoint[], property: string): number[] => {
       let postProcessMinMax = (min: number, max: number) => {
@@ -88,11 +82,11 @@ const App: React.FC = () => {
       return parseInt(urlParams.get(property) as string);
     };
 
-    let findMinAndMax = (property: string, dataFiltered: Map<number, DataPoint>): number[] => {
+    let findMinAndMax = (property: string, dataPoints: DataPoint[]): number[] => {
       let urlParamMin = processManualSetMinAndMax(`${property}Min`);
       let urlParamMax = processManualSetMinAndMax(`${property}Max`);
       if (!urlParamMin || !urlParamMax) {
-        let [min_calculated, max_calculated] = findCalculatedMinAndMax(Array.from(dataFiltered.values()), property);
+        let [min_calculated, max_calculated] = findCalculatedMinAndMax(Array.from(dataPoints), property);
 
         return [(urlParamMin) ? urlParamMin : min_calculated,
         (urlParamMax) ? urlParamMax : max_calculated];
@@ -100,9 +94,9 @@ const App: React.FC = () => {
       return [urlParamMin, urlParamMax];
     };
 
-    let [xMin, xMax] = findMinAndMax("x", dataFiltered);
-    let [yMin, yMax] = findMinAndMax("y", dataFiltered);
-    let [sizeMin, sizeMax] = findMinAndMax("size", dataFiltered);
+    let [xMin, xMax] = findMinAndMax("x", dataPoints);
+    let [yMin, yMax] = findMinAndMax("y", dataPoints);
+    let [sizeMin, sizeMax] = findMinAndMax("size", dataPoints);
 
     let svg = select(svgRef.current);
     let width = svgRef.current.clientWidth - 50;
@@ -134,13 +128,15 @@ const App: React.FC = () => {
 
     //create line
     let linePath = line<number>()
-      .x(function (d) { return xScale((dataFiltered.get(d) as DataPoint).x) as number; })
-      .y(function (d) { return yScale((dataFiltered.get(d) as DataPoint).y) as number; });
+      .x(function (d) { return xScale((dataPoints[d] as DataPoint).x) as number; })
+      .y(function (d) { return yScale((dataPoints[d] as DataPoint).y) as number; })
+
     if (series.size === 0) {
-      series.set("All Data", Array.from(dataFiltered.keys()));
+      series.set("All Data", dataPoints.map((dataPoint) => dataPoint.index));
     }
 
-    (Array.from(series.values())).forEach((seriesArray) => {
+    (Array.from(series.entries())).forEach((seriesTuple) => {
+      let seriesArray = seriesTuple[1];
       svg.append("path")
         .datum(seriesArray) //  Binds data to the line
         .attr("class", "line")
@@ -148,12 +144,28 @@ const App: React.FC = () => {
         .attr("fill", "none")
         .attr("pointer-events", "visibleStroke")
         .style("stroke", "black")
-        .attr("stroke-width", "1px");
+        .attr("stroke-width", "1px")
+        .on("mouseover", (event: any, datum) => {
+          setTooltipActive({
+            transform: `translate(${event.clientX - 10}px, ${event.clientY - 10}px)`,
+            visibility: "visible"
+          });
+          setTooltipContent({ title: seriesTuple[0], activeElement: event.currentTarget });
+        }).on("mouseout", (event: any, datum) => {
+          setTooltipActive((tooltipActive) => {
+            return {
+              ...tooltipActive,
+              visibility: "hidden"
+            }
+          });
+        });
+
     });
+
 
     //create data points
     svg.selectAll(".dot")
-      .data(Array.from(dataFiltered.values()))
+      .data(Array.from(dataPoints))
       .enter().append("circle")
       .attr("class", "dot") // Assign a class for styling
       .attr("cx", function (d) { return xScale(d.x) as number; })
@@ -161,10 +173,10 @@ const App: React.FC = () => {
       .attr("r", function (d) { return sizeScale(d.size) as number })
       .on("mouseover", (event: any, dataPoint: DataPoint) => {
         setTooltipActive({
-          transform: `translate(${xScale(dataPoint.x)}px, ${yScale(dataPoint.x)}px)`,
+          transform: `translate(${xScale(dataPoint.x)}px, ${yScale(dataPoint.y)}px)`,
           visibility: "visible"
         });
-        setTooltipContent({ title: dataPoint.title });
+        setTooltipContent({ title: dataPoint.title, activeElement: event.currentTarget });
       })
       .on("mouseout", (event: any, dataPoint: DataPoint) => {
         setTooltipActive((tooltipActive) => {
@@ -185,6 +197,8 @@ const App: React.FC = () => {
       ...tooltipActive,
       visibility: "visible"
     });
+    tooltipContent.activeElement?.classList.add("active");
+    console.log(tooltipContent);
   };
 
   let tooltipMouseoutEventListener = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -192,6 +206,7 @@ const App: React.FC = () => {
       ...tooltipActive,
       visibility: "hidden"
     });
+    tooltipContent.activeElement?.classList.remove("active");
   };
 
 
