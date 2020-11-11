@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { select } from 'd3-selection'
-import { scaleLinear } from 'd3-scale'
+import { scaleLinear, scaleTime } from 'd3-scale'
 import { axisBottom, axisLeft } from 'd3-axis'
 import { line } from 'd3-shape'
 import './App.css'
@@ -21,6 +21,7 @@ interface DataPoint {
 interface CompleteGraphData {
   data_points: DataPoint[];
   series: Record<string, number[]>;
+  is_x_time: boolean;
 }
 
 const App: React.FC = () => {
@@ -106,9 +107,11 @@ const App: React.FC = () => {
     let svg = select(svgRef.current);
     let width = svgRef.current.clientWidth - 50;
     let height = svgRef.current.clientHeight - 50;
-    let xScale = scaleLinear()
-      .domain([xMin, xMax + Math.abs(xMax - xMin) * 0.1])
-      .range([25, width]);
+
+    let xDomain = [xMin, xMax + Math.abs(xMax - xMin) * 0.1];
+    let xRange = [25, width];
+    let xScale = (data.is_x_time ? scaleTime(xDomain, xRange)
+      : scaleLinear(xDomain, xRange));
 
     let yScale = scaleLinear()
       .domain([yMin - 0.1 * Math.abs(yMax - yMin), yMax])
