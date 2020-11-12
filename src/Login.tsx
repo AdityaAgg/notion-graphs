@@ -8,15 +8,11 @@ const Login: React.FC = () => {
 
   let [notionCookie, setNotionCookie] = useState("");
   let history = useHistory();
-  function loginAction() {
-    storeNotionCookie(notionCookie);
-    tryLogin();
-  };
+
   function storeNotionCookie(cvalue: string) {
     let expiryDate = new Date(Date.UTC(2052, 7, 17, 0, 0, 0));
     document.cookie = `token_v2=${cvalue};expires=${expiryDate.toUTCString()};path=/`;
   }
-
   function tryLogin() {
     if (history.length === 0) {
       return (<Redirect to="/login" />);
@@ -25,10 +21,14 @@ const Login: React.FC = () => {
     }
   }
 
+  function loginAction() {
+    storeNotionCookie(notionCookie);
+    tryLogin();
+  };
+
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     setNotionCookie(event.target.value);
   }
-
 
   return (
     <div className="container">
