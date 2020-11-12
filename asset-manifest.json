@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/notion-graphs/static/css/main.8913e672.chunk.css",
-    "main.js": "/notion-graphs/static/js/main.b36b34e4.chunk.js",
-    "main.js.map": "/notion-graphs/static/js/main.b36b34e4.chunk.js.map",
+    "main.js": "/notion-graphs/static/js/main.5141c9fd.chunk.js",
+    "main.js.map": "/notion-graphs/static/js/main.5141c9fd.chunk.js.map",
     "runtime-main.js": "/notion-graphs/static/js/runtime-main.210dec1e.js",
     "runtime-main.js.map": "/notion-graphs/static/js/runtime-main.210dec1e.js.map",
     "static/js/2.fa2d62c7.chunk.js": "/notion-graphs/static/js/2.fa2d62c7.chunk.js",
@@ -16,6 +16,6 @@
     "static/js/runtime-main.210dec1e.js",
     "static/js/2.fa2d62c7.chunk.js",
     "static/css/main.8913e672.chunk.css",
-    "static/js/main.b36b34e4.chunk.js"
+    "static/js/main.5141c9fd.chunk.js"
   ]
 }
