@@ -108,10 +108,22 @@
   border-color: transparent transparent black transparent;
 }
 
-.line.active {
-  stroke-width: 3; 
+.line.active, .line:hover {
+  stroke-width: 3;
 }
 
-/* TODO: convert to sass and enable .line.active on .line hover */
+.dot.active, .dot:hover {
+  stroke-width: 3;
+  stroke:black;
+  opacity: 1;
+}
+
+.faded .line {
+  opacity: 0.2;
+}
+
+.faded .line.active {
+  opacity: 1;
+}
 
 
