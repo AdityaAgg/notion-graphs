@@ -1,21 +1,21 @@
 {
   "files": {
     "main.css": "/notion-graphs/static/css/main.d775d206.chunk.css",
-    "main.js": "/notion-graphs/static/js/main.ef249c31.chunk.js",
-    "main.js.map": "/notion-graphs/static/js/main.ef249c31.chunk.js.map",
+    "main.js": "/notion-graphs/static/js/main.c0f71821.chunk.js",
+    "main.js.map": "/notion-graphs/static/js/main.c0f71821.chunk.js.map",
     "runtime-main.js": "/notion-graphs/static/js/runtime-main.210dec1e.js",
     "runtime-main.js.map": "/notion-graphs/static/js/runtime-main.210dec1e.js.map",
-    "static/js/2.f7f21b4b.chunk.js": "/notion-graphs/static/js/2.f7f21b4b.chunk.js",
-    "static/js/2.f7f21b4b.chunk.js.map": "/notion-graphs/static/js/2.f7f21b4b.chunk.js.map",
+    "static/js/2.63d7cbb8.chunk.js": "/notion-graphs/static/js/2.63d7cbb8.chunk.js",
+    "static/js/2.63d7cbb8.chunk.js.map": "/notion-graphs/static/js/2.63d7cbb8.chunk.js.map",
     "index.html": "/notion-graphs/index.html",
     "static/css/main.d775d206.chunk.css.map": "/notion-graphs/static/css/main.d775d206.chunk.css.map",
-    "static/js/2.f7f21b4b.chunk.js.LICENSE.txt": "/notion-graphs/static/js/2.f7f21b4b.chunk.js.LICENSE.txt",
+    "static/js/2.63d7cbb8.chunk.js.LICENSE.txt": "/notion-graphs/static/js/2.63d7cbb8.chunk.js.LICENSE.txt",
     "static/media/loop2.37a8f9ca.svg": "/notion-graphs/static/media/loop2.37a8f9ca.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.210dec1e.js",
-    "static/js/2.f7f21b4b.chunk.js",
+    "static/js/2.63d7cbb8.chunk.js",
     "static/css/main.d775d206.chunk.css",
-    "static/js/main.ef249c31.chunk.js"
+    "static/js/main.c0f71821.chunk.js"
   ]
 }
