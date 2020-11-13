@@ -3,12 +3,12 @@ import { select } from 'd3-selection'
 import { scaleLinear, scaleTime } from 'd3-scale'
 import { axisBottom, axisLeft } from 'd3-axis'
 import { line } from 'd3-shape'
-import './App.scss'
 import useSWR from 'swr'
-import refreshIcon from './loop2.svg';
+import refreshIcon from '../assets/loop2.svg';
 import { mutate } from "swr";
 import CSS from 'csstype';
 import { Redirect } from 'react-router-dom'
+import { urlPath } from '../lib/constants'
 
 interface DataPoint {
   index: number;
@@ -30,11 +30,11 @@ const LineGraph: React.FC = () => {
   const svgRef = useRef<null | SVGSVGElement>(null);
   let { data } = useSWR<CompleteGraphData>(searchLocation,
     async (params) => {
-      const RESPONSE = await fetch("http://localhost:5000/line_graph" + params, {
+      const RESPONSE = await fetch(`${urlPath()}/line_graph${params}`, {
         method: "GET",
         headers: {
           'Accept': 'application/json',
-          'Content-Type': 'application/jsson',
+          'Content-Type': 'application/json',
           'Cache': 'no-cache'
         },
         credentials: 'include'
@@ -215,7 +215,6 @@ const LineGraph: React.FC = () => {
     tooltipContent.activeElement?.classList.remove("active");
     svgRef.current?.classList.remove("faded");
   };
-
   return (
     <div className="container">
       {

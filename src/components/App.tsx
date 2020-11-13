@@ -6,10 +6,11 @@ import {
 } from "react-router-dom";
 import LineGraph from './LineGraph';
 import Login from './Login';
+import '../assets/App.scss'
 
 const App: React.FC = () => {
     return (
-        <Router>
+        <Router basename={process.env.PUBLIC_URL}>
             <Switch>
                 <Route path="/login">
                     <Login />
