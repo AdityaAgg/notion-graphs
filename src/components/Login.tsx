@@ -12,8 +12,8 @@ const Login: React.FC = () => {
 
   function storeNotionCookie(cvalue: string) {
     let expiryDate = new Date(Date.UTC(2052, 7, 17, 0, 0, 0));
-    document.cookie = `cookies_set=true;expires=${expiryDate.toUTCString()};path=/;`;
     document.cookie = `token_v2=${cvalue};domain=.${window.location.hostname};expires=${expiryDate.toUTCString()};path=/;`;
+    document.cookie = `cookies_set=true;expires=${expiryDate.toUTCString()};path=/;`;
   }
   function tryLogin() {
     if (history.length === 0) {
