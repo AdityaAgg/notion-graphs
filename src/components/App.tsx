@@ -1,12 +1,12 @@
 import React from 'react'
 import {
-    HashRouter as Router,
+    BrowserRouter as Router,
     Switch,
     Route
 } from "react-router-dom";
 import LineGraph from './LineGraph';
 import Login from './Login';
-import '../assets/App.scss'
+import '../assets/App.scss';
 
 const App: React.FC = () => {
     return (
