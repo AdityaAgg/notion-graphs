@@ -218,7 +218,7 @@ const LineGraph: React.FC = () => {
   return (
     <div className="container">
       {
-        !document.cookie.includes("token_v2") &&
+        !document.cookie.includes("cookies_set") &&
         <Redirect push
           to={{
             pathname: "/login",
