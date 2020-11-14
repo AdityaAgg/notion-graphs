@@ -1,6 +1,6 @@
 export function apiDomain() {
     if (process.env.NODE_ENV === 'production') {
-        return "https://l175wxlpxi.execute-api.us-east-1.amazonaws.com";
+        return "l175wxlpxi.execute-api.us-east-1.amazonaws.com";
     } else {
         return "localhost";
     }
