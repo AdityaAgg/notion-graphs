@@ -8,7 +8,7 @@ export function apiDomain() {
 
 export function urlPath() {
     if (process.env.NODE_ENV === 'production') {
-        return `https://${apiDomain()}/v1/production`;
+        return `https://${apiDomain()}/v1`;
     } else {
         return `http://${apiDomain()}:5000`;
     }
