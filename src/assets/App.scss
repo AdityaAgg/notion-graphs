@@ -149,3 +149,59 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+#url-generation-form {
+  line-height: 300%;
+}
+
+#url-generation-form input {
+  margin-left: 10px;
+  margin-right: 20px;
+}
+
+#url-generation-form #xmax, #url-generation-form #ymax {
+  margin-left: 0px;
+}
+
+#url-generation-form #xmin, #url-generation-form #ymin {
+  margin-right: 0px;
+}
+
+#url-generation-form #url {
+  width: 95%;
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+#url-generation-form {
+  margin: 40px;
+}
+
+#url-generation-form div {
+  margin-bottom: 30px;
+}
+
+#url-generation-form #axis-bounds input {
+  width: 40px;
+}
+
+#url-generation-form {
+  font-weight: bold;
+  font-size: small;
+}
+
+@media only screen and (max-width: 800px) {
+  #url-generation-form input {
+    display: block;
+  }
+  #url-generation-form #axis-bounds input {
+    display: inline;
+  }
+  #url-generation-form #axis-bounds #ylabel {
+    display: block;
+  }
+}
+
+input {
+  padding: 6px 4px;
+}

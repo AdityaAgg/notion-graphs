@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import LineGraph from './LineGraph';
 import Login from './Login';
+import Home from './Home';
 import '../assets/App.scss';
 
 const App: React.FC = () => {
@@ -19,7 +20,7 @@ const App: React.FC = () => {
                     <LineGraph />
                 </Route>
                 <Route path="/">
-                    <Login />
+                    <Home />
                 </Route>
             </Switch>
         </Router>
