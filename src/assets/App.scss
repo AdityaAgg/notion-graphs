@@ -159,6 +159,16 @@ code {
   margin-right: 20px;
 }
 
+#url-generation-form .controlled-form-field input {
+  margin: 0px;
+}
+
+.controlled-form-field {
+  margin-left: 10px;
+  margin-right: 20px;
+}
+
+
 #url-generation-form #xmax, #url-generation-form #ymax {
   margin-left: 0px;
 }
@@ -188,6 +198,17 @@ code {
 #url-generation-form {
   font-weight: bold;
   font-size: small;
+}
+
+.controlled-form-field span {
+  display: block;
+  font-weight: normal;
+  color: red;
+}
+
+.controlled-form-field span::before {
+  content: '⊗ ';
+  
 }
 
 @media only screen and (max-width: 800px) {
