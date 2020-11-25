@@ -38,6 +38,8 @@ const Home: React.FC = () => {
         };
     };
 
+    let [embedLinkState, setEmbedLinkState] = useState({ isError: true, embedLink: '' });
+
     const { value: url, bind: bindUrl, error: urlError } = useInput('', valueExistsValidation);
     const { value: xField, bind: bindXField, error: xFieldError } = useInput('', valueExistsValidation);
     const { value: yField, bind: bindYField, error: yFieldError } = useInput('', valueExistsValidation);
@@ -49,26 +51,35 @@ const Home: React.FC = () => {
     const { value: yMax, bind: bindYMax } = useInput('');
 
     function generateEmbedLink() {
+        let isError = false;
+        let embedLink = '';
         if (urlError !== '' || xFieldError !== '' || yFieldError !== '') {
-            console.log("all fields have not met their criteria -- see errors above");
+            embedLink = "all fields have not met their criteria -- see errors above";
+            isError = true;
+        } else {
+            embedLink = "https://notion-graphs.com/line_graph"
+                + `?url=${url}&x=${encodeURIComponent(xField)}&y=${encodeURIComponent(yField)}`;
+            function addOptionalIfExists(fieldIdentifier: string, value: string | number) {
+                return (!valueExists(value)) ? '' :
+                    `&${fieldIdentifier}=${encodeURIComponent(value)}`;
+            }
+            let optionalParams = {
+                'size': size,
+                'series': series,
+                'xMin': xMin,
+                'xMax': xMax,
+                'yMin': yMin,
+                'yMax': yMax
+            }
+            embedLink += Object.entries(optionalParams).reduce((optionalUrlString, entry) => {
+                const [optionalParam, optionalParamValue] = entry;
+                return optionalUrlString + addOptionalIfExists(optionalParam, optionalParamValue);
+            }, '');
         }
-        let embedLink = `?url=${url}&x=${xField}&y=${yField}`;
-        function addOptionalIfExists(fieldIdentifier: string, value: string | number) {
-            return (!valueExists(value)) ? '' : `&${fieldIdentifier}=${value}`;
-        }
-        let optionalParams = {
-            'size': size,
-            'series': series,
-            'xMin': xMin,
-            'xMax': xMax,
-            'yMin': yMin,
-            'yMax': yMax
-        }
-        embedLink += Object.entries(optionalParams).forEach(entry => {
-            const [optionalParam, optionalParamValue] = entry;
-            addOptionalIfExists(optionalParam, optionalParamValue);
+        setEmbedLinkState({
+            isError,
+            embedLink
         });
-        console.log(embedLink);
     }
     return (
         <div className="container" id="url-generation-form">
@@ -111,6 +122,20 @@ const Home: React.FC = () => {
                 </label>
             </div>
             <button onClick={generateEmbedLink}>Submit</button>
+            <div>
+                {embedLinkState.isError ?
+                    <div className='submit-error'>{embedLinkState.embedLink}</div>
+                    : (
+                        <div className="copyable-div">
+                            <button className='copy'> Copy to Clipboard </button>
+                            <button className='visit'> Visit </button>
+                            <div className="submit-link">{embedLinkState.embedLink}</div>
+                        </div>)
+                }
+                {!embedLinkState.isError &&
+                    <iframe frameBorder="0" src={embedLinkState.embedLink} />
+                }
+            </div>
         </div>
     );
 }
