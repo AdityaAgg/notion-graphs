@@ -1,4 +1,5 @@
 import React, { ChangeEvent, useState } from 'react'
+import { localDomain } from '../lib/constants';
 import ControlledFormField from './ControlledFormField';
 
 const Home: React.FC = () => {
@@ -57,7 +58,7 @@ const Home: React.FC = () => {
             embedLink = "all fields have not met their criteria -- see errors above";
             isError = true;
         } else {
-            embedLink = "https://notion-graphs.com/line_graph"
+            embedLink = `${localDomain()}/line_graph`
                 + `?url=${url}&x=${encodeURIComponent(xField)}&y=${encodeURIComponent(yField)}`;
             function addOptionalIfExists(fieldIdentifier: string, value: string | number) {
                 return (!valueExists(value)) ? '' :

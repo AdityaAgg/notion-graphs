@@ -6,6 +6,14 @@ export function apiDomain() {
     }
 }
 
+export function localDomain() {
+    if (process.env.NODE_ENV === 'production') {
+        return "https://notion-graphs.com"
+    } else {
+        return "http://localhost:3000"
+    }
+}
+
 export function urlPath() {
     if (process.env.NODE_ENV === 'production') {
         return `https://${apiDomain()}/v1`;
