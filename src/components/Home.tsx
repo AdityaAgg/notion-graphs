@@ -81,6 +81,14 @@ const Home: React.FC = () => {
             embedLink
         });
     }
+
+    function copyToClipBoard(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+        let linkDiv = document.getElementsByClassName("embed-link")[0] as HTMLTextAreaElement;
+        linkDiv.select();
+        document.execCommand("copy");
+    }
+
+
     return (
         <div className="container" id="url-generation-form">
             <div>
@@ -127,9 +135,9 @@ const Home: React.FC = () => {
                     <div className='submit-error'>{embedLinkState.embedLink}</div>
                     : (
                         <div className="copyable-div">
-                            <button className='copy'> Copy to Clipboard </button>
-                            <button className='visit'> Visit </button>
-                            <div className="submit-link">{embedLinkState.embedLink}</div>
+                            <button className='copy' onClick={copyToClipBoard}> Copy to Clipboard </button>
+                            <a href={embedLinkState.embedLink} target="_blank"><button className='visit'> Visit </button></a>
+                            <textarea className="embed-link">{embedLinkState.embedLink}</textarea>
                         </div>)
                 }
                 {!embedLinkState.isError &&
