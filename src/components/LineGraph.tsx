@@ -9,6 +9,7 @@ import { mutate } from "swr";
 import CSS from 'csstype';
 import { Redirect } from 'react-router-dom'
 import { urlPath } from '../lib/constants'
+import { GraphComponentProps } from './ControlledGraph'
 
 interface DataPoint {
   index: number;
@@ -25,10 +26,10 @@ interface CompleteGraphData {
   is_x_time: boolean;
 }
 
-const LineGraph: React.FC = () => {
-  const searchLocation = window.location.search;
+const LineGraph: React.FC<GraphComponentProps> = (props) => {
+  const searchLocation = props.searchLocation;
   const svgRef = useRef<null | SVGSVGElement>(null);
-  let { data } = useSWR<CompleteGraphData>(searchLocation,
+  let { data, error } = useSWR<CompleteGraphData>(searchLocation,
     async (params) => {
       const RESPONSE = await fetch(`${urlPath()}/line_graph${params}`, {
         method: "GET",
@@ -40,8 +41,8 @@ const LineGraph: React.FC = () => {
         credentials: 'include'
       });
       const JSON_RESPONSE = await RESPONSE.json()
-      if (RESPONSE.status === 400) {
-        throw JSON_RESPONSE
+      if (RESPONSE.status >= 400) {
+        throw JSON_RESPONSE;
       }
       return JSON_RESPONSE
     }, { refreshInterval: 30000 }
@@ -56,9 +57,11 @@ const LineGraph: React.FC = () => {
   const [tooltipContent, setTooltipContent] = useState(() => {
     return { title: "", activeElement: null as unknown as undefined | HTMLElement }
   });
-
   useEffect(() => {
     if (svgRef == null || svgRef.current == null || !data) {
+      if (error) {
+        props.handleError(error);
+      }
       return;
     }
     let dataPoints = data.data_points;
@@ -109,7 +112,6 @@ const LineGraph: React.FC = () => {
     let xRange = [25, width];
     let xScale = (data.is_x_time ? scaleTime(xDomain, xRange)
       : scaleLinear(xDomain, xRange));
-
     let yScale = scaleLinear()
       .domain([yMin - 0.1 * Math.abs(yMax - yMin), yMax])
       .range([height, 65]);
@@ -193,9 +195,10 @@ const LineGraph: React.FC = () => {
       });
     return () => {
       svg.selectAll(".dot").remove();
-      svg.select(".line").remove();
+      svg.selectAll(".line").remove();
+      svg.selectAll(".axis").remove();
     }
-  }, [data, searchLocation]);
+  }, [data, searchLocation, error]);
 
   let tooltipMouseoverEventListener = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     setTooltipActive({
@@ -216,21 +219,12 @@ const LineGraph: React.FC = () => {
     svgRef.current?.classList.remove("faded");
   };
   return (
-    <div className="container">
-      {
-        !document.cookie.includes("cookies_set") &&
-        <Redirect push
-          to={{
-            pathname: "/login",
-            state: { from: searchLocation }
-          }}
-        />
-      }
+    <>
       <div id="graph-tooltip" style={tooltipActive} onMouseOut={tooltipMouseoutEventListener}
         onMouseOver={tooltipMouseoverEventListener}>{tooltipContent.title}</div>
       <svg id="journey-timeline" ref={svgRef} />
       <button id="refresh-button" onClick={() => mutate(searchLocation)}> <img alt="refresh graph" src={refreshIcon} /></button>
-    </div>
+    </>
   );
 }
 
