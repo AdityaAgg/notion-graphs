@@ -139,7 +139,7 @@ const Home: React.FC = () => {
                 &nbsp;<input type="text" {...bindYMax} id="ymax" name="ymax" />
                 </label>
             </div>
-            <button onClick={generateEmbedLink}>Submit</button>
+            <button onClick={generateEmbedLink}>Create Graph</button>
             <div>
                 {embedLinkState.isError ?
                     <div className='submit-error'>{embedLinkState.embedLink}</div>
