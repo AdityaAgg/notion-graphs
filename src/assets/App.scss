@@ -2,6 +2,7 @@
   padding: 10px;
   margin: 0px;
   flex-grow: 1;
+  min-height: 300px;
 }
 
 #root {
@@ -11,7 +12,6 @@
 
 #journey-timeline {
   height: 100%;
-  min-height: 300px;
   width: 100%;
 }
 
@@ -29,7 +29,6 @@
   top: 25px;
   right: 25px;
 }
-
 
 #refresh-button:hover {
   width: 30px;
@@ -210,10 +209,59 @@ code {
   content: '⊗ ';
 }
 
+#controlled-graph-error::before {
+  content: '⊗ ';
+}
+
 .submit-error {
   color: red;
 }
 
+.inner-centered-content-container {
+  vertical-align: middle;
+  display:table-cell;
+  text-align: center;
+  padding: 0 25%;
+}
+
+.outer-centered-content-container {
+  width: 100%;
+  height: 100%;
+  display: table;
+}
+
+#login {
+  display: flex;
+  width: 50%;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 800px;
+}
+
+#login button {
+  width: auto;
+  margin-top: 0px;
+}
+
+#login input {
+  width: 100%;
+}
+
+#login * {
+  margin: 20px 0px;
+}
+
+#login img {
+  height: auto;
+  width: auto\9;
+  max-width: 100%;
+  border: solid 1px #000000;
+  border-radius: 5px;
+}
+#login p {
+  align-self: flex-start;
+}
 @media only screen and (max-width: 800px) {
   #url-generation-form input {
     display: block;
@@ -263,10 +311,30 @@ input {
 }
 
 button {
-  cursor: pointer;
+  background: #DADADA;
+  border-width: 0px;
+  padding: 10px 15px;
   outline: none;
 }
 
+button:hover {
+  background: #c6c6c6;
+  border-width: 0px;
+  padding: 10px 15px;
+}
+button:active {
+  background: #949494;
+}
+
+.copyable-div button:hover {
+  top: 1px;
+  position: absolute;
+  border-radius: 0px;
+  background: #DADADA;
+  box-shadow: 1px 1px 2px 0 rgba(0,0,0,0.50);
+  border-width: 0px;
+  padding: 5px 10px;
+}
 .copyable-div button:active {
   top: 1px;
   position: absolute;

@@ -1,3 +1,5 @@
+_For image and video assets larger than 5MB consider uploading to an S3 Bucket or other file sharing solution and referencing the link_
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

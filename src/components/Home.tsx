@@ -1,4 +1,5 @@
 import React, { ChangeEvent, useState } from 'react'
+import { Redirect } from 'react-router-dom';
 import { localDomain } from '../lib/constants';
 import ControlledFormField from './ControlledFormField';
 
@@ -92,6 +93,14 @@ const Home: React.FC = () => {
 
     return (
         <div className="container" id="url-generation-form">
+            {
+                !document.cookie.includes("cookies_set") &&
+                <Redirect push
+                    to={{
+                        pathname: "/login"
+                    }}
+                />
+            }
             <div>
                 <label>
                     Notion Page Link:

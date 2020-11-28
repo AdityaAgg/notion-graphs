@@ -8,6 +8,7 @@ import LineGraph from './LineGraph';
 import Login from './Login';
 import Home from './Home';
 import '../assets/App.scss';
+import ControlledGraph from './ControlledGraph';
 
 const App: React.FC = () => {
     return (
@@ -17,7 +18,7 @@ const App: React.FC = () => {
                     <Login />
                 </Route>
                 <Route path="/line_graph">
-                    <LineGraph />
+                    <ControlledGraph graphComponent={LineGraph} />
                 </Route>
                 <Route path="/">
                     <Home />
