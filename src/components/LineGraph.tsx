@@ -7,7 +7,6 @@ import useSWR from 'swr'
 import refreshIcon from '../assets/loop2.svg';
 import { mutate } from "swr";
 import CSS from 'csstype';
-import { Redirect } from 'react-router-dom'
 import { urlPath } from '../lib/constants'
 import { GraphComponentProps } from './ControlledGraph'
 
