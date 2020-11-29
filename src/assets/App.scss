@@ -309,21 +309,28 @@ input {
   margin-top: 20px;
   margin-bottom: 0px;
 }
-
-button {
+button:not(.shepherd-button):not(.shepherd-cancel-icon) {
   background: #DADADA;
   border-width: 0px;
   padding: 10px 15px;
   outline: none;
 }
 
-button:hover {
+button:hover:not(.shepherd-button):not(.shepherd-cancel-icon) {
   background: #c6c6c6;
   border-width: 0px;
   padding: 10px 15px;
 }
-button:active {
+//why is button css no longer getting applied?
+button:active:not(.shepherd-button):not(.shepherd-cancel-icon) {
   background: #949494;
+}
+
+.shepherd-content img {
+  //height: auto;
+  width: auto\9;
+  max-width: 100%;
+  margin-bottom: .5em;
 }
 
 .copyable-div button:hover {
@@ -379,7 +386,10 @@ button:active {
   left: 1px;
 }
 
-
 .visit {
   left: 140px;
+}
+
+#create-graph-button {
+  margin-bottom: 20px;
 }

@@ -18,7 +18,7 @@ const ControlledGraph: React.FC<ControlledGraphProps> = (props) => {
         if (error.message) {
             setError(error.message);
         } else {
-            setError("There might be something wrong with the server. Please explain your use case here: ");
+            setError("There might be something wrong with the server. Please describe your use case here: <a href=\"https://forms.gle/3r7fEjLMZD5ayg4e9\">https://forms.gle/3r7fEjLMZD5ayg4e9</a>");
         }
     }
     return (
