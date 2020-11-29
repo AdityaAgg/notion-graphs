@@ -321,13 +321,12 @@ button:hover:not(.shepherd-button):not(.shepherd-cancel-icon) {
   border-width: 0px;
   padding: 10px 15px;
 }
-//why is button css no longer getting applied?
+
 button:active:not(.shepherd-button):not(.shepherd-cancel-icon) {
   background: #949494;
 }
 
 .shepherd-content img {
-  //height: auto;
   width: auto\9;
   max-width: 100%;
   margin-bottom: .5em;
