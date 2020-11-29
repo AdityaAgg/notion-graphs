@@ -2,6 +2,7 @@ import React, { ChangeEvent, useState } from 'react'
 import { Redirect } from 'react-router-dom';
 import { localDomain } from '../lib/constants';
 import ControlledFormField from './ControlledFormField';
+import OnboardingBootstrap from './OnboardingBootstrap';
 
 const Home: React.FC = () => {
 
@@ -90,7 +91,6 @@ const Home: React.FC = () => {
         document.execCommand("copy");
     }
 
-
     return (
         <div className="container" id="url-generation-form">
             {
@@ -101,9 +101,13 @@ const Home: React.FC = () => {
                     }}
                 />
             }
+            {
+                document.cookie.includes("cookies_set") &&
+                <OnboardingBootstrap />
+            }
             <div>
                 <label>
-                    Notion Page Link:
+                    Notion Database View Link:
             <ControlledFormField changeListener={bindUrl} name="url" error={urlError} />
                 </label>
             </div>
@@ -123,7 +127,7 @@ const Home: React.FC = () => {
             <input type="text" {...bindSize} id="size" name="size" />
                 </label>
                 <label>
-                    Relation to Indicate Series:
+                    Series (must be a Notion relation):
             <input type="text" {...bindSeries} id="series" name="series" />
                 </label>
             </div>
@@ -139,7 +143,7 @@ const Home: React.FC = () => {
                 &nbsp;<input type="text" {...bindYMax} id="ymax" name="ymax" />
                 </label>
             </div>
-            <button onClick={generateEmbedLink}>Create Graph</button>
+            <button id="create-graph-button" onClick={generateEmbedLink}>Create Graph</button>
             <div>
                 {embedLinkState.isError ?
                     <div className='submit-error'>{embedLinkState.embedLink}</div>

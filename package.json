@@ -25,6 +25,8 @@
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.0",
+    "react-shepherd": "^3.3.2",
+    "shepherd.js": "^8.1.0",
     "swr": "^0.3.5",
     "typescript": "^3.7.5"
   },
