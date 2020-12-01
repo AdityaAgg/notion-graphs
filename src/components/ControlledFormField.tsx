@@ -17,6 +17,6 @@ const ControlledFormField: React.FC<ControlledFormFieldProps> = (props) => {
             <span style={{ visibility: (props.error !== '') ? 'visible' : 'hidden' }}>{props.error}</span>
         </div>
     );
-}
+};
 
 export default ControlledFormField;

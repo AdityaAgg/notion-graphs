@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
 import {
-  Redirect,
   useHistory
 } from "react-router-dom";
-import { apiDomain } from '../lib/constants';
 
 const Login: React.FC = () => {
 
@@ -17,8 +15,11 @@ const Login: React.FC = () => {
     document.cookie = `cookies_set=true;expires=${expiryDate.toUTCString()};path=/;`;
   }
   function tryLogin() {
-    if (history.length === 0) {
-      return (<Redirect to="/login" />);
+    console.log(history);
+    let historyLocation = history.location;
+    if (history.length === 0 ||
+      !(historyLocation.state && (historyLocation.state as Object).hasOwnProperty("from"))) {
+      history.push("/");
     } else {
       history.goBack();
     }
@@ -32,15 +33,19 @@ const Login: React.FC = () => {
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     setNotionCookie(event.target.value);
   }
-
+  document.cookie.includes("cookies_set") && tryLogin();
   return (
     <div className="container">
       <div className="outer-centered-content-container">
         <div className="inner-centered-content-container" id="login">
-          <input type="password" onChange={handleChange} placeholder="Enter your Notion Token" />
-          <button onClick={loginAction}>Log In</button>
+          <form>
+            <input type="password" autoComplete="password" onChange={handleChange}
+              placeholder="Enter your Notion Token" />
+            <button type="button" onClick={loginAction}>Log In</button>
+          </form>
+
           <p>Need help finding your notion token? See below:</p>
-          <a target="_blank"
+          <a target="_blank" rel="noreferrer"
             href="https://notion-graphs-assets.s3.amazonaws.com/find_notion_token.gif">
             <img src="https://notion-graphs-assets.s3.amazonaws.com/find_notion_token.gif"
               alt="How to Find your Notion Token" />
@@ -49,6 +54,6 @@ const Login: React.FC = () => {
       </div>
     </div>
   );
-}
+};
 
 export default Login;

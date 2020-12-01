@@ -1,3 +1,13 @@
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
+form {
+  width: 100%;
+  height: 100%;
+}
+
 .container {
   padding: 10px;
   margin: 0px;
@@ -391,4 +401,18 @@ button:active:not(.shepherd-button):not(.shepherd-cancel-icon) {
 
 #create-graph-button {
   margin-bottom: 20px;
+}
+
+.axis-label {
+  font-weight: bold;
+  font-size: small;
+}
+
+.menu-style {
+  top: 20px; 
+  right: 20px; 
+  color: black;
+  position: absolute;
+  font-size: 20px;
+  cursor: pointer;
 }

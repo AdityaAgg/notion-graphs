@@ -19,9 +19,7 @@ const OnboardingBootstrapInner: React.FC = () => {
     }
     return (
         <> </>
-        // <button className="button dark" onClick={tour?.start} >
-        //     Start Tour
-        // </button >
     );
 };
+
 export default OnboardingBootstrap;
