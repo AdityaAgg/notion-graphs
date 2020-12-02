@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import {
   useHistory
 } from "react-router-dom";
+import { urlPath } from '../lib/constants';
 
 const Login: React.FC = () => {
 
@@ -13,9 +14,21 @@ const Login: React.FC = () => {
     let startWithDot = (process.env.NODE_ENV === 'production') ? '.' : '';
     document.cookie = `token_v2=${cvalue};domain=${startWithDot}${window.location.hostname};expires=${expiryDate.toUTCString()};path=/;`;
     document.cookie = `cookies_set=true;expires=${expiryDate.toUTCString()};path=/;`;
+    fetch(`${urlPath()}/set_http_only`, { //asynchronously secure login token
+      method: "GET",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Cache': 'no-cache'
+      },
+      credentials: 'include'
+    }).catch(error => {
+      console.error("yikes!...we're not logging in properly; we're going to want to fix this "
+        + error);
+      //TODO: emit metric to monitor for errors
+    });
   }
   function tryLogin() {
-    console.log(history);
     let historyLocation = history.location;
     if (history.length === 0 ||
       !(historyLocation.state && (historyLocation.state as Object).hasOwnProperty("from"))) {
