@@ -130,6 +130,25 @@ const LineGraph: React.FC<GraphComponentProps> = (props) => {
       .attr("transform", "translate(25,0)")
       .call(axisLeft(yScale));
 
+    //axis labels
+    let xLabel = urlParams.get("x");
+    if (xLabel) {
+      svg.append("text")
+        .attr("class", "x axis-label")
+        .attr("transform", `translate(${width / 2},${height + 40})`)
+        .attr("text-anchor", "middle")
+        .text(xLabel)
+        ;
+    }
+    let yLabel = urlParams.get("y");
+    if (yLabel) {
+      svg.append("text")
+        .attr("class", "y axis-label")
+        .attr("transform", `translate(10,50)`)
+        .text(yLabel)
+        ;
+    }
+
     //create line
     let linePath = line<number>()
       .x(function (d) { return xScale((dataPoints[d] as DataPoint).x) as number; })
@@ -225,6 +244,6 @@ const LineGraph: React.FC<GraphComponentProps> = (props) => {
       <button id="refresh-button" onClick={() => mutate(searchLocation)}> <img alt="refresh graph" src={refreshIcon} /></button>
     </>
   );
-}
+};
 
 export default LineGraph;

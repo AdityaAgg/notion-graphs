@@ -9,6 +9,7 @@ import Login from './Login';
 import Home from './Home';
 import '../assets/App.scss';
 import ControlledGraph from './ControlledGraph';
+import Logout from './Logout';
 
 const App: React.FC = () => {
     return (
@@ -16,6 +17,9 @@ const App: React.FC = () => {
             <Switch>
                 <Route path="/login">
                     <Login />
+                </Route>
+                <Route path="/logout">
+                    <Logout />
                 </Route>
                 <Route path="/line_graph">
                     <ControlledGraph graphComponent={LineGraph} />
@@ -26,6 +30,6 @@ const App: React.FC = () => {
             </Switch>
         </Router>
     );
-}
+};
 
 export default App;

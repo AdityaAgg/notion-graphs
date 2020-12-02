@@ -21,7 +21,7 @@ export const onboardingSteps: ShepherdOptionsWithType[] = [
             }
         ],
         title: `Step 1`,
-        text: [`<a target="_blank"
+        text: [`<a target="_blank" rel="noreferrer"
         href="https://notion-graphs-assets.s3.amazonaws.com/copy_link.gif">
         <img src="https://notion-graphs-assets.s3.amazonaws.com/copy_link.gif"
           alt="Copy Notion Database View Link" />
@@ -47,7 +47,7 @@ export const onboardingSteps: ShepherdOptionsWithType[] = [
             }
         ],
         title: 'Step 2',
-        text: [`<a target="_blank"
+        text: [`<a target="_blank" rel="noreferrer"
         href="https://notion-graphs-assets.s3.amazonaws.com/fill_in_fields.gif">
         <img src="https://notion-graphs-assets.s3.amazonaws.com/fill_in_fields.gif"
           alt="Fill in Fields" />
@@ -73,7 +73,7 @@ export const onboardingSteps: ShepherdOptionsWithType[] = [
             }
         ],
         title: 'Step 3',
-        text: [`<a target="_blank"
+        text: [`<a target="_blank" rel="noreferrer"
         href="https://notion-graphs-assets.s3.amazonaws.com/create_graph.gif">
         <img src="https://notion-graphs-assets.s3.amazonaws.com/create_graph.gif"
           alt="Create Graph" />

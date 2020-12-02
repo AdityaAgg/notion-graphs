@@ -1,8 +1,10 @@
 import React, { ChangeEvent, useState } from 'react'
-import { Redirect } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 import { localDomain } from '../lib/constants';
 import ControlledFormField from './ControlledFormField';
 import OnboardingBootstrap from './OnboardingBootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 
 const Home: React.FC = () => {
 
@@ -91,13 +93,20 @@ const Home: React.FC = () => {
         document.execCommand("copy");
     }
 
+    let history = useHistory();
+    function logout() {
+        history.push("/logout");
+    }
+    const searchLocation = window.location.search;
     return (
         <div className="container" id="url-generation-form">
+            <FontAwesomeIcon icon={faSignOutAlt} className="menu-style" onClick={logout} />
             {
                 !document.cookie.includes("cookies_set") &&
                 <Redirect push
                     to={{
-                        pathname: "/login"
+                        pathname: "/login",
+                        state: { from: searchLocation }
                     }}
                 />
             }
@@ -150,7 +159,7 @@ const Home: React.FC = () => {
                     : (
                         <div className="copyable-div">
                             <button className='copy' onClick={copyToClipBoard}> Copy to Clipboard </button>
-                            <a href={embedLinkState.embedLink} target="_blank"><button className='visit'> Visit </button></a>
+                            <a href={embedLinkState.embedLink} target="_blank" rel="noreferrer"><button className='visit'> Visit </button></a>
                             <textarea className="embed-link">{embedLinkState.embedLink}</textarea>
                         </div>)
                 }
@@ -160,6 +169,6 @@ const Home: React.FC = () => {
             </div>
         </div>
     );
-}
+};
 
 export default Home;
