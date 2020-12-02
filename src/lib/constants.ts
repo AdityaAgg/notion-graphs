@@ -21,4 +21,3 @@ export function urlPath() {
         return `http://${apiDomain()}:5000`;
     }
 }
-
