@@ -1,0 +1,5 @@
+customHeaders:
+  - pattern: '**/*'
+    headers:
+    - key: 'Content-Security-Policy'
+      value: 'frame-ancestors https://notion-graphs.com https://*.notion-graphs.com https://*.notion.so https://notion.so'

@@ -3,8 +3,6 @@ import { Redirect, useHistory } from 'react-router-dom';
 import { localDomain } from '../lib/constants';
 import ControlledFormField from './ControlledFormField';
 import OnboardingBootstrap from './OnboardingBootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 
 const Home: React.FC = () => {
 
@@ -100,7 +98,7 @@ const Home: React.FC = () => {
     const searchLocation = window.location.search;
     return (
         <div className="container" id="url-generation-form">
-            <FontAwesomeIcon icon={faSignOutAlt} className="menu-style" onClick={logout} />
+            <button className="menu-style" onClick={logout} >Logout</button>
             {
                 !document.cookie.includes("cookies_set") &&
                 <Redirect push
