@@ -20,6 +20,7 @@ const Logout: React.FC = () => {
         if (response.status >= 400) {
             throw response;
         } else {
+            document.cookie = `cookies_set=true;max-age=0;path=/;`;
             setLogout(true);
         }
     }).catch(error => {
