@@ -35,7 +35,7 @@ const ControlledGraph: React.FC<ControlledGraphProps> = (props) => {
                     }}
                 />
             }
-            {(error != '' || !document.cookie.includes("cookies_set")) ? (<div className="outer-centered-content-container">
+            {(error !== '' || !document.cookie.includes("cookies_set")) ? (<div className="outer-centered-content-container">
                 <div className="submit-error inner-centered-content-container" id="controlled-graph-error">
                     {error}{isUnknownError && formLink}
                 </div>

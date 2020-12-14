@@ -44,8 +44,7 @@ const LineGraph: React.FC<GraphComponentProps> = (props) => {
         throw JSON_RESPONSE;
       }
       return JSON_RESPONSE
-    }, { refreshInterval: 30000 }
-  );
+    });
   const [tooltipActive, setTooltipActive] = useState(() => {
     return {
       visibility: 'hidden',
