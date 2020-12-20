@@ -98,7 +98,12 @@ const Home: React.FC = () => {
     const searchLocation = window.location.search;
     return (
         <div className="container" id="url-generation-form">
-            <button className="menu-style" onClick={logout} >Logout</button>
+            <div className="menu-style">
+                <a target="_blank" href="https://www.notion.so/Frequently-Asked-Questions-2f52fcc938c84297af448b9b6dbee9fa">
+                    <button className="Help">Help</button>
+                </a>
+                <button onClick={logout} >Logout</button>
+            </div>
             {
                 !document.cookie.includes("cookies_set") &&
                 <Redirect push

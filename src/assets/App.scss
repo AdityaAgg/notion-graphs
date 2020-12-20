@@ -414,3 +414,11 @@ button:active:not(.shepherd-button):not(.shepherd-cancel-icon) {
   position: absolute;
   cursor: pointer;
 }
+
+.menu-style button {
+  margin: 0px 10px;
+}
+
+button {
+  cursor: pointer;
+}
