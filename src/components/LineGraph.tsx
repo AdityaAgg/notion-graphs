@@ -107,7 +107,7 @@ const LineGraph: React.FC<GraphComponentProps> = (props) => {
     let height = svgRef.current.clientHeight - 50;
 
     let xDomain = [xMin, xMax + Math.abs(xMax - xMin) * 0.1];
-    let xRange = [25, width];
+    let xRange = [50, width];
     let xScale = (data.is_x_time ? scaleTime(xDomain, xRange)
       : scaleLinear(xDomain, xRange));
     let yScale = scaleLinear()
@@ -126,7 +126,7 @@ const LineGraph: React.FC<GraphComponentProps> = (props) => {
 
     svg.append("g")
       .attr("class", "y axis")
-      .attr("transform", "translate(25,0)")
+      .attr("transform", "translate(50,0)")
       .call(axisLeft(yScale));
 
     //axis labels
