@@ -49,6 +49,11 @@ const Login: React.FC = () => {
   document.cookie.includes("cookies_set") && tryLogin();
   return (
     <div className="container">
+      <div className="menu-style">
+        <a target="_blank" href="https://www.notion.so/Frequently-Asked-Questions-2f52fcc938c84297af448b9b6dbee9fa">
+          <button>Learn More</button>
+        </a>
+      </div>
       <div className="outer-centered-content-container">
         <div className="inner-centered-content-container" id="login">
           <form>
