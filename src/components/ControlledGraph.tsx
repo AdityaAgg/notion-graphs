@@ -19,7 +19,11 @@ const ControlledGraph: React.FC<ControlledGraphProps> = (props) => {
         if (error.message && error.message.trim() !== "Failed to fetch") {
             setError(error.message);
             setIsUnknownError(false);
+        } else if (error.status == 504) {
+            setError("Our server timed out. This is probably because there is a formula computation that is too expensive for our server. Please describe your use case here: ");
+            setIsUnknownError(true);
         } else {
+
             setError("There might be something wrong with the server. Please describe your use case here: ");
             setIsUnknownError(true);
         }
